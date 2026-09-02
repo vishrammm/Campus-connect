@@ -5,7 +5,9 @@ import {
   Menu, X, Plus, Upload, ArrowLeft, Check, Download, Eye, Trash2, Pencil, Clock,
   MapPin, Send, AlertCircle, Briefcase, Shield, Building2, CheckCircle, Image,
   Phone, Mail, Settings, Users, ChevronRight, BarChart3, Sun, Moon, Sparkles,
+  GraduationCap,
 } from "lucide-react";
+import ParticleButton from "@/components/kokonutui/particle-button";
 // ─── Types ────────────────────────────────────────────────────────────────────
 type Role = "student" | "co-admin" | "admin" | "staff";
  type View =
@@ -102,8 +104,17 @@ function Av({ name, size = "md" }: { name: string; size?: "sm" | "md" | "lg" }) 
   const letters = name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
   const sz = { sm: "w-8 h-8 text-xs", md: "w-10 h-10 text-sm", lg: "w-14 h-14 text-base" };
   return (
-    <div className={`${sz[size]} rounded-full bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center text-white font-bold flex-shrink-0 select-none`}>
+    <div className={`${sz[size]} rounded-full bg-gradient-to-br from-[#497060] to-[#173f35] flex items-center justify-center text-white font-bold flex-shrink-0 select-none`}>
       {letters}
+    </div>
+  );
+}
+
+function CampusMark({ size = "md" }: { size?: "sm" | "md" }) {
+  const dimensions = size === "sm" ? "w-9 h-9" : "w-12 h-12";
+  return (
+    <div className={`${dimensions} rounded-2xl bg-[#173f35] text-[#f6efe2] flex items-center justify-center shadow-sm ring-1 ring-[#f6efe2]/20`} aria-hidden="true">
+      <GraduationCap className={size === "sm" ? "w-5 h-5" : "w-6 h-6"} strokeWidth={1.8} />
     </div>
   );
 }
@@ -118,11 +129,11 @@ function Btn({ children, onClick, v = "blue", sz = "md", full = false, cls = "",
 }) {
   const base = "inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer";
   const V = {
-    blue: "bg-blue-600 hover:bg-blue-700 text-white focus:ring-blue-500 shadow-sm hover:shadow-md",
-    violet: "bg-violet-600 hover:bg-violet-700 text-white focus:ring-violet-500 shadow-sm",
+    blue: "bg-[#173f35] hover:bg-[#0e3027] text-white focus:ring-[#497060] shadow-sm hover:shadow-md",
+    violet: "bg-[#a75e3a] hover:bg-[#874727] text-white focus:ring-[#a75e3a] shadow-sm",
     ghost: "bg-transparent hover:bg-slate-100 text-slate-600 focus:ring-slate-300",
     red: "bg-red-600 hover:bg-red-700 text-white focus:ring-red-500",
-    outline: "bg-white border border-blue-200 hover:border-blue-400 hover:bg-blue-50 text-blue-700 focus:ring-blue-300",
+    outline: "bg-white border border-[#b9cdbf] hover:border-[#497060] hover:bg-[#eef3ed] text-[#173f35] focus:ring-[#b9cdbf]",
     dark: "bg-slate-900 hover:bg-slate-800 text-white focus:ring-slate-500",
   };
   const S = { xs: "px-2.5 py-1 text-xs", sm: "px-3.5 py-2 text-xs", md: "px-5 py-2.5 text-sm", lg: "px-6 py-3 text-sm" };
@@ -254,110 +265,66 @@ function LoginPage({ onLogin, gotoSignup }: { onLogin: (u: AppUser) => void; got
     { title: "Marketplace", detail: "Buy and sell within campus", Icon: ShoppingBag },
   ];
   const roleLabels: Record<Role, string> = { student: "Student", "co-admin": "Co-Admin", admin: "Admin", staff: "Staff" };
-  const roleIcons: Record<Role, typeof User> = { student: User, "co-admin": Users, admin: Shield, staff: Briefcase };
-
   return (
-    <div className="min-h-screen flex bg-[#070b17] text-white overflow-hidden relative">
-      {/* Ambient animated background */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-48 -left-32 w-[34rem] h-[34rem] rounded-full bg-blue-600/15 blur-3xl animate-pulse" />
-        <div className="absolute -bottom-48 right-0 w-[38rem] h-[38rem] rounded-full bg-violet-600/15 blur-3xl" />
-        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "linear-gradient(rgba(148,163,184,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,.12) 1px, transparent 1px)", backgroundSize: "42px 42px" }} />
-      </div>
-
-      {/* Branded interactive panel */}
-      <div className="hidden lg:flex lg:w-5/12 xl:w-1/2 flex-col justify-between p-12 relative z-10">
-        <div>
-          <div className="flex items-center gap-3 mb-20">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30 rotate-3 hover:rotate-0 transition-transform duration-300">
-              <Building2 className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <span className="block text-white font-extrabold text-lg tracking-tight">Campus Connect</span>
-              <span className="block text-[10px] uppercase tracking-[0.22em] text-slate-400">MHSSCE student network</span>
-            </div>
+    <main className="min-h-screen bg-[#f4f0e8] text-[#16251f] lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(360px,440px)]">
+      <section className="relative hidden min-h-screen overflow-hidden bg-[#173f35] lg:flex lg:items-center lg:justify-center lg:p-8 xl:p-12">
+        <img src="/login-image.jpg" alt="Anjuman-I-Islam's M. H. Saboo Siddik College of Engineering campus" className="absolute inset-0 h-full w-full object-contain object-center" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#102b24]/80 via-[#102b24]/18 to-transparent" />
+        <div className="relative z-10 mt-auto w-full px-7 pb-8 xl:px-10 xl:pb-10">
+          <div className="max-w-[500px] mb-5 text-white">
+            <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#f0d695]">MHSSCE campus network</p>
+            <h2 className="mt-2 text-3xl font-extrabold tracking-tight">Your campus, in one place.</h2>
+            <p className="mt-2 max-w-md text-sm leading-relaxed text-white/90">Everything you need to stay connected, informed, and involved—without searching across separate groups.</p>
           </div>
-
-          <div className="max-w-lg">
-            <p className="text-cyan-300 text-xs font-bold uppercase tracking-[0.3em] mb-5">Your campus. One space.</p>
-            <h2 className="text-5xl xl:text-6xl font-black leading-[0.98] tracking-tight mb-6">
-              Connect.<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-violet-400">Discover.</span><br />Belong.
-            </h2>
-            <p className="text-slate-400 text-base leading-relaxed max-w-sm mb-10">
-              A smarter way to stay connected, informed, and involved in everything happening at MHSSCE.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3 max-w-md">
+          <div className="grid max-w-[500px] grid-cols-2 gap-2.5">
             {features.map(({ title, detail, Icon }, index) => (
-              <button
-                key={title}
-                onMouseEnter={() => setActiveFeature(index)}
-                onFocus={() => setActiveFeature(index)}
-                onClick={() => setActiveFeature(index)}
-                className={`text-left rounded-2xl border p-4 transition-all duration-300 ${activeFeature === index ? "bg-white/10 border-cyan-300/50 -translate-y-1 shadow-xl shadow-cyan-950/30" : "bg-white/[0.03] border-white/10 hover:bg-white/[0.07]"}`}
-              >
-                <div className={`w-9 h-9 rounded-xl flex items-center justify-center mb-3 transition-colors ${activeFeature === index ? "bg-cyan-400 text-slate-950" : "bg-white/10 text-cyan-300"}`}>
-                  <Icon className="w-4 h-4" />
-                </div>
-                <span className="block text-sm font-bold text-white">{title}</span>
-                <span className="block text-xs text-slate-400 mt-1 leading-relaxed">{detail}</span>
+              <button key={title} onMouseEnter={() => setActiveFeature(index)} onFocus={() => setActiveFeature(index)} onClick={() => setActiveFeature(index)}
+                className={`flex items-center gap-3 rounded-sm border px-4 py-3 text-left text-sm font-semibold text-white transition-all ${activeFeature === index ? "border-[#e6c883] bg-[#173f35]/70" : "border-white/60 bg-[#102b24]/45 hover:bg-[#102b24]/70"}`}>
+                <Icon className={`h-4 w-4 ${activeFeature === index ? "text-[#e6c883]" : "text-white/85"}`} />
+                <span><span className="block">{title}</span><span className="block text-[10px] font-medium text-white/70">{detail}</span></span>
               </button>
             ))}
           </div>
         </div>
-        <div className="flex items-center gap-2 text-xs text-slate-500">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_10px_#34d399]" />
-          <span>Campus network online</span>
-          <span className="mx-1 text-slate-700">•</span>
-          <span>© 2024 Campus Connect</span>
-        </div>
-      </div>
+      </section>
 
-      {/* Login card */}
-      <div className="flex-1 flex items-center justify-center p-5 sm:p-8 relative z-10">
-        <div className="w-full max-w-md">
+      <section className="flex min-h-screen items-center justify-center overflow-y-auto px-5 py-8 sm:px-8 lg:px-10">
+        <div className="w-full max-w-[380px]">
           <div className="flex items-center justify-center gap-3 mb-8 lg:hidden">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
-              <Building2 className="w-5 h-5 text-white" />
-            </div>
+            <CampusMark size="sm" />
             <div>
-              <span className="block text-white font-extrabold text-lg">Campus Connect</span>
-              <span className="block text-[10px] uppercase tracking-[0.18em] text-slate-500">MHSSCE student network</span>
+              <span className="block font-extrabold text-lg">Campus Connect</span>
+              <span className="block text-[10px] uppercase tracking-[0.18em] text-[#64756d]">MHSSCE campus network</span>
             </div>
           </div>
 
-          <div className="rounded-[2rem] border border-white/10 bg-slate-900/75 backdrop-blur-xl p-6 sm:p-8 shadow-2xl shadow-black/40">
-            <div className="mb-7">
+          <div className="rounded-xl border border-[#d8d0c2] bg-[#fffdf8] p-5 sm:p-6 shadow-[0_14px_35px_rgba(39,58,47,0.10)]">
+            <div className="mb-5">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-bold uppercase tracking-[0.22em] text-cyan-300">Secure sign in</span>
-                <span className="flex items-center gap-1.5 text-[11px] text-emerald-300"><span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />Protected</span>
+                <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#a75e3a]">Secure sign in</span>
+                <span className="flex items-center gap-1.5 text-[11px] text-[#497060]"><span className="w-1.5 h-1.5 rounded-full bg-[#497060]" />MHSSCE access</span>
               </div>
-              <h1 className="text-3xl font-black tracking-tight text-white">Welcome back<span className="text-cyan-300">.</span></h1>
-              <p className="text-slate-400 text-sm mt-2">Pick your access level and enter the campus.</p>
+              <h1 className="text-2xl font-extrabold tracking-tight text-[#16251f]">Welcome back.</h1>
+              <p className="text-[#64756d] text-xs mt-1.5">Choose your role, then continue to your campus space.</p>
             </div>
 
-            <div className="flex gap-1 p-1.5 bg-black/30 border border-white/5 rounded-2xl mb-7">
-              {(["student", "co-admin", "admin", "staff"] as Role[]).map(r => {
-                const Icon = roleIcons[r];
-                return (
-                  <button key={r} onClick={() => { setRole(r); setErr(""); }}
-                    className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 px-1 rounded-xl text-xs font-bold transition-all ${role === r ? "bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 shadow-lg shadow-blue-500/20" : "text-slate-400 hover:text-white hover:bg-white/5"}`}>
-                    <Icon className="w-3.5 h-3.5" />{roleLabels[r]}
-                  </button>
-                );
-              })}
+            <div className="mb-5">
+              <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-[#64756d]">Sign in as</label>
+              <select value={role} onChange={e => { setRole(e.target.value as Role); setErr(""); }}
+                className="w-full appearance-none rounded-lg border border-[#d8d0c2] bg-[#edf0e9] px-3 py-2.5 text-xs font-bold text-[#173f35] outline-none transition focus:border-[#a75e3a] focus:ring-2 focus:ring-[#a75e3a]/20">
+                {(["student", "co-admin", "admin", "staff"] as Role[]).map(r => <option key={r} value={r}>{roleLabels[r]}</option>)}
+              </select>
             </div>
 
-            <div className="space-y-5">
-              <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-400">
+            <div className="space-y-4">
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold uppercase tracking-wider text-[#64756d]">
                   {role === "staff" ? "Mobile Number" : "Email / Username"}
                 </label>
                 <div className="relative group">
                   {role === "staff"
-                    ? <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-cyan-300 transition-colors" />
-                    : <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-cyan-300 transition-colors" />}
+                    ? <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#839088] group-focus-within:text-[#a75e3a] transition-colors" />
+                    : <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#839088] group-focus-within:text-[#a75e3a] transition-colors" />}
                   <input
                     type={role === "staff" ? "tel" : "email"}
                     placeholder={role === "staff" ? "e.g., +91 98765 43210" : "you@mhssce.ac.in"}
@@ -368,55 +335,55 @@ function LoginPage({ onLogin, gotoSignup }: { onLogin: (u: AppUser) => void; got
                       setErr("");
                     }}
                     required
-                    className="w-full pl-11 pr-4 py-3.5 rounded-xl border border-white/10 bg-white/[0.06] text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 focus:border-cyan-300/50 transition-all text-sm"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-[#d8d0c2] bg-[#fffdf8] text-[#16251f] placeholder:text-[#99a199] focus:outline-none focus:ring-2 focus:ring-[#a75e3a]/25 focus:border-[#a75e3a] transition-all text-xs"
                   />
                 </div>
               </div>
-              <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-400">Password</label>
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold uppercase tracking-wider text-[#64756d]">Password</label>
                 <div className="relative group">
-                  <Shield className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-cyan-300 transition-colors" />
+                  <Shield className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#839088] group-focus-within:text-[#a75e3a] transition-colors" />
                   <input type={showPw ? "text" : "password"} placeholder="Enter your password" value={pw} onChange={e => { setPw(e.target.value); setErr(""); }} required
-                    className="w-full pl-11 pr-12 py-3.5 rounded-xl border border-white/10 bg-white/[0.06] text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 focus:border-cyan-300/50 transition-all text-sm" />
+                    className="w-full pl-10 pr-12 py-2.5 rounded-lg border border-[#d8d0c2] bg-[#fffdf8] text-[#16251f] placeholder:text-[#99a199] focus:outline-none focus:ring-2 focus:ring-[#a75e3a]/25 focus:border-[#a75e3a] transition-all text-xs" />
                   <button type="button" onClick={() => setShowPw(v => !v)} aria-label={showPw ? "Hide password" : "Show password"}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-slate-500 hover:text-cyan-300 hover:bg-white/10 transition-colors">
+                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-[#839088] hover:text-[#173f35] hover:bg-[#edf0e9] transition-colors">
                     <Eye className="w-4 h-4" />
                   </button>
                 </div>
               </div>
 
               <div className="flex items-center justify-between">
-                <label className="flex items-center gap-2 text-sm text-slate-400 cursor-pointer select-none">
-                  <input type="checkbox" checked={remember} onChange={e => setRemember(e.target.checked)} className="w-4 h-4 rounded border-white/20 bg-white/10 text-cyan-400 focus:ring-cyan-400/60" />
+                <label className="flex items-center gap-1.5 text-xs text-[#64756d] cursor-pointer select-none">
+                  <input type="checkbox" checked={remember} onChange={e => setRemember(e.target.checked)} className="w-4 h-4 rounded border-[#b9c3b7] text-[#173f35] focus:ring-[#173f35]/40" />
                   Remember me
                 </label>
-                <button type="button" className="text-xs text-cyan-300 hover:text-cyan-200 font-bold transition-colors">Forgot password?</button>
+                <button type="button" className="text-xs text-[#a75e3a] hover:text-[#7f4328] font-bold transition-colors">Forgot password?</button>
               </div>
 
               {err && (
-                <div className="flex items-center gap-2 p-3 rounded-xl bg-red-500/10 border border-red-400/20 text-red-300 text-sm">
+                <div className="flex items-center gap-2 p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm">
                   <AlertCircle className="w-4 h-4 flex-shrink-0" />{err}
                 </div>
               )}
 
-              <button type="button" onClick={submit}
-                className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500 px-6 py-3.5 text-sm font-extrabold text-slate-950 shadow-lg shadow-blue-500/20 hover:shadow-cyan-400/20 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-300 focus:ring-offset-2 focus:ring-offset-slate-900">
+              <ParticleButton type="button" onClick={submit}
+                className="w-full rounded-lg bg-[#173f35] px-5 py-2.5 text-xs font-extrabold text-white shadow-sm hover:bg-[#0e3027] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 focus-visible:ring-[#a75e3a]">
                 Enter Campus Connect <ChevronRight className="w-4 h-4" />
-              </button>
+              </ParticleButton>
             </div>
 
             {role !== "admin" && (
-              <p className="mt-7 text-center text-sm text-slate-500">
+              <p className="mt-4 text-center text-xs text-[#64756d]">
                 New to the network?{" "}
                 <button onClick={() => gotoSignup(role as "student" | "co-admin" | "staff")}
-                  className="text-cyan-300 hover:text-cyan-200 font-bold transition-colors">Create an account</button>
+                  className="text-[#a75e3a] hover:text-[#7f4328] font-bold transition-colors">Create an account</button>
               </p>
             )}
           </div>
-          <p className="text-center text-[11px] text-slate-600 mt-5">Use your official MHSSCE credentials to continue.</p>
+          <p className="text-center text-[11px] text-[#758078] mt-5">Use your official MHSSCE credentials to continue.</p>
         </div>
-      </div>
-    </div>
+    </section>
+  </main>
   );
 }
 
@@ -531,13 +498,11 @@ function Sidebar({ user, active, nav, setView, onLogout, open, setOpen }: {
   return (
     <>
       {open && <div className="fixed inset-0 bg-black/50 z-30 lg:hidden backdrop-blur-sm" onClick={() => setOpen(false)} />}
-      <aside className={`fixed inset-y-0 left-0 z-40 w-64 bg-slate-900 flex flex-col transition-transform duration-300 lg:static lg:z-auto lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
+      <aside className={`fixed inset-y-0 left-0 z-40 w-64 bg-[#102b24] flex flex-col transition-transform duration-300 lg:static lg:z-auto lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
 
         {/* Logo */}
         <div className="flex items-center gap-3 px-5 h-16 border-b border-white/10 flex-shrink-0">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center flex-shrink-0">
-            <Building2 className="w-5 h-5 text-white" />
-          </div>
+          <CampusMark size="sm" />
           <div>
             <div className="font-extrabold text-white text-sm leading-none">Campus Connect</div>
             <div className="text-xs text-slate-500 mt-0.5 capitalize">{user.role === "co-admin" ? "Co-Admin" : user.role === "staff" ? "Staff" : user.role} Portal</div>
@@ -548,7 +513,7 @@ function Sidebar({ user, active, nav, setView, onLogout, open, setOpen }: {
         <nav className="flex-1 overflow-y-auto p-3 space-y-0.5">
           {nav.map(({ id, label, Icon }) => (
             <button key={id} onClick={() => { setView(id); setOpen(false); }}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 ${active === id ? "bg-blue-600 text-white" : "text-slate-400 hover:text-white hover:bg-white/10"}`}>
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 ${active === id ? "bg-[#497060] text-white" : "text-slate-400 hover:text-white hover:bg-white/10"}`}>
               <Icon className="w-4 h-4 flex-shrink-0" />{label}
             </button>
           ))}
@@ -585,9 +550,9 @@ function Header({ user, onMenu, search, onSearch, onBell, dark, onToggleTheme }:
       </button>
       <div className="flex-1 max-w-xs">
         <div className="relative group">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-cyan-400 transition-colors" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-[#a75e3a] transition-colors" />
           <input value={search} onChange={e => onSearch(e.target.value)} placeholder="Search campus…"
-            className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50 dark:bg-white/[0.06] border border-slate-200 dark:border-white/10 text-sm text-slate-700 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 focus:border-cyan-400/50 transition-all" />
+            className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50 dark:bg-white/[0.06] border border-slate-200 dark:border-white/10 text-sm text-slate-700 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#a75e3a]/30 focus:border-[#a75e3a]/50 transition-all" />
         </div>
       </div>
       <div className="ml-auto flex items-center gap-2 sm:gap-3">
@@ -632,25 +597,25 @@ function StudentDashboard({ user, setView }: { user: AppUser; setView: (v: View)
   return (
     <div className="flex-1 overflow-y-auto">
       {/* Campus image hero */}
-      <div className="bg-[#0b1220] px-6 py-8 lg:px-10 lg:py-10 text-white relative overflow-hidden flex-shrink-0 group">
+      <div className="bg-[#173f35] min-h-64 px-6 py-8 lg:px-10 lg:py-10 text-white relative overflow-hidden flex-shrink-0 group flex items-center">
         <img
           src="/campus-hero.jpg"
           alt="MHSSCE campus building"
-          className="absolute inset-0 w-full h-full object-cover object-[center_35%] opacity-35 group-hover:scale-105 transition-transform duration-700"
+          className="absolute inset-0 w-full h-full object-cover object-[36%_center] opacity-80 group-hover:scale-[1.03] transition-transform duration-700"
         />
 
-        <div className="absolute inset-0 bg-gradient-to-r from-[#071225]/95 via-blue-900/75 to-violet-900/60" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#173f35]/10 via-[#173f35]/35 to-[#102b24]/95" />
 
-        <div className="relative z-10">
-          <p className="text-cyan-200 text-xs font-bold uppercase tracking-[0.25em] mb-3">
+        <div className="relative z-10 ml-auto w-full max-w-lg text-right">
+          <p className="text-[#e6c883] text-xs font-bold uppercase tracking-[0.22em] mb-3">
             MHSSCE campus network
           </p>
 
           <h1 className="text-2xl lg:text-3xl font-black mb-2 leading-tight">
-            Your campus, in one place<span className="text-cyan-200">.</span>
+            Your campus, in one place<span className="text-[#e6c883]">.</span>
           </h1>
 
-          <p className="text-blue-100 text-sm lg:text-base">
+          <p className="text-[#e2ebe5] text-sm lg:text-base">
             Everything you need to stay connected, informed, and involved.
           </p>
         </div>
@@ -1945,7 +1910,7 @@ export default function App() {
   const [view, setView] = useState<View>("login");
   const [sidebar, setSidebar] = useState(false);
   const [search, setSearch] = useState("");
-  const [dark, setDark] = useState(true);
+  const [dark, setDark] = useState(false);
   const [isEntering, setIsEntering] = useState(false);
 
   const login = (u: AppUser) => {
